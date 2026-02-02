@@ -10,7 +10,7 @@ class ChatRequest(BaseModel):
     history: list = []
 
 def stream_ai(prompt):
-    response = requests.post(
+    r = requests.post(
         "http://localhost:11434/api/generate",
         json={
             "model": "llama3",
@@ -20,7 +20,7 @@ def stream_ai(prompt):
         stream=True
     )
 
-    for line in response.iter_lines():
+    for line in r.iter_lines():
         if line:
             data = json.loads(line)
             yield data.get("response", "")
